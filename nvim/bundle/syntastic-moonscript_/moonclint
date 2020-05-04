@@ -1,0 +1,3 @@
+#!/bin/bash
+moonc -l "${1}" 2>&1 | awk 'NR==1{fn=$1;next}$1=="line"{printf"W: %s:%s ",fn,$2;for(i=3;i<=NF;i++){printf "%s ",$i};printf"\n";next}NR==2&&$1=="Failed"{failed="true";next}failed=="true"{gsub(/[^0-9]/,"",$1);printf"E: %s:%s: Failed to parse\n",fn,$1;exit}'
+
